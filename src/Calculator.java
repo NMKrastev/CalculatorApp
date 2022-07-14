@@ -17,6 +17,7 @@ public class Calculator implements ActionListener {
     double numOne = 0, numTwo = 0, result = 0;
     char operator;
     boolean isDecimal = false;
+    boolean isEquals = false;
 
     Calculator() {
 
@@ -100,45 +101,93 @@ public class Calculator implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        for (int i = 0; i < 10; i++) {
+        if (!isEquals) {
 
+            for (int i = 0; i < 10; i++) {
 
-            if (e.getSource() == numberButtons[i]) {
-                textField.setText(textField.getText().concat(String.valueOf(i)));
+                if (e.getSource() == numberButtons[i]) {
+                    textField.setText(textField.getText().concat(String.valueOf(i)));
+                }
+
             }
+        } else {
 
+            textField.setText("");
+
+            for (int i = 0; i < 10; i++) {
+
+                if (e.getSource() == numberButtons[i]) {
+                    textField.setText(textField.getText().concat(String.valueOf(i)));
+                }
+            }
+            isEquals = false;
         }
 
         if (e.getSource() == decButton) {
+
             if (!isDecimal) {
                 textField.setText(textField.getText().concat("."));
                 isDecimal = true;
+                isEquals = false;
             }
         }
+
         if (e.getSource() == addButton) {
-            numOne = Double.parseDouble(textField.getText());
+
+            if (textField.getText().equals("")) {
+                numOne = result;
+            } else {
+                numOne = Double.parseDouble(textField.getText());
+            }
+
             operator = '+';
             textField.setText("");
             isDecimal = false;
+            isEquals = false;
         }
+
         if (e.getSource() == subButton) {
-            numOne = Double.parseDouble(textField.getText());
+
+            if (textField.getText().equals("")) {
+                numOne = result;
+            } else {
+                numOne = Double.parseDouble(textField.getText());
+            }
+
             operator = '-';
             textField.setText("");
             isDecimal = false;
+            isEquals = false;
         }
+
         if (e.getSource() == mulButton) {
-            numOne = Double.parseDouble(textField.getText());
+
+            if (textField.getText().equals("")) {
+                numOne = result;
+            } else {
+                numOne = Double.parseDouble(textField.getText());
+            }
+
             operator = '*';
             textField.setText("");
             isDecimal = false;
+            isEquals = false;
         }
+
         if (e.getSource() == divButton) {
-            numOne = Double.parseDouble(textField.getText());
+
+            if (textField.getText().equals("")) {
+                numOne = result;
+            } else {
+                numOne = Double.parseDouble(textField.getText());
+            }
+
             operator = '/';
             textField.setText("");
             isDecimal = false;
+            isEquals = false;
         }
+
         if (e.getSource() == equButton) {
             numTwo = Double.parseDouble(textField.getText());
 
@@ -159,14 +208,19 @@ public class Calculator implements ActionListener {
             textField.setText(String.valueOf(result));
             numOne = result;
             isDecimal = false;
+            isEquals = true;
         }
 
         if (e.getSource() == clrButton) {
             textField.setText("");
             isDecimal = false;
+            isEquals = false;
         }
+
         if (e.getSource() == delButton) {
+
             String text = textField.getText();
+
             if(text.charAt(text.length() - 1) == '.') {
                 isDecimal = false;
             }
@@ -176,12 +230,16 @@ public class Calculator implements ActionListener {
 
                 textField.setText(textField.getText() + text.charAt(i));
             }
+            isEquals = false;
         }
+
         if (e.getSource() == negButton) {
+
             double temp = Double.parseDouble(textField.getText());
             temp *= -1;
             textField.setText(String.valueOf(temp));
             isDecimal = false;
+            isEquals = false;
         }
     }
 }
