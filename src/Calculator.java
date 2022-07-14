@@ -1,3 +1,4 @@
+import javax.print.attribute.standard.PresentationDirection;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -103,5 +104,61 @@ public class Calculator implements ActionListener {
 
         }
 
+        if (e.getSource() == decButton) {
+            textField.setText(textField.getText().concat("."));
+        }
+        if (e.getSource() == addButton) {
+            numOne = Double.parseDouble(textField.getText());
+            operator = '+';
+            textField.setText("");
+        }
+        if (e.getSource() == subButton) {
+            numOne = Double.parseDouble(textField.getText());
+            operator = '-';
+            textField.setText("");
+        }
+        if (e.getSource() == mulButton) {
+            numOne = Double.parseDouble(textField.getText());
+            operator = '*';
+            textField.setText("");
+        }
+        if (e.getSource() == divButton) {
+            numOne = Double.parseDouble(textField.getText());
+            operator = '/';
+            textField.setText("");
+        }
+        if (e.getSource() == equButton) {
+            numTwo = Double.parseDouble(textField.getText());
+
+            switch (operator) {
+                case '+' :
+                    result = numOne + numTwo;
+                    break;
+                case '-' :
+                    result = numOne - numTwo;
+                    break;
+                case '*' :
+                    result = numOne * numTwo;
+                    break;
+                case '/' :
+                    result = numOne / numTwo;
+                    break;
+            }
+            textField.setText(String.valueOf(result));
+            numOne = result;
+        }
+
+        if (e.getSource() == clrButton) {
+            textField.setText("");
+        }
+        if (e.getSource() == delButton) {
+            String text = textField.getText();
+            textField.setText("");
+
+            for (int i = 0; i < text.length() - 1; i++) {
+
+                textField.setText(textField.getText() + text.charAt(i));
+            }
+        }
     }
 }
