@@ -1,4 +1,3 @@
-import javax.print.attribute.standard.PresentationDirection;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -11,12 +10,13 @@ public class Calculator implements ActionListener {
     JButton[] numberButtons = new JButton[10];
     JButton[] functionButtons = new JButton[9];
     JButton addButton, subButton, mulButton, divButton,
-    decButton, equButton, delButton, clrButton, negButton;
+            decButton, equButton, delButton, clrButton, negButton;
     JPanel panel;
     Font font = new Font("Arial", Font.BOLD, 20);
 
     double numOne = 0, numTwo = 0, result = 0;
     char operator;
+    boolean isDecimal = false;
 
     Calculator() {
 
@@ -100,9 +100,8 @@ public class Calculator implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 
-
-
         for (int i = 0; i < 10; i++) {
+
 
             if (e.getSource() == numberButtons[i]) {
                 textField.setText(textField.getText().concat(String.valueOf(i)));
@@ -111,54 +110,66 @@ public class Calculator implements ActionListener {
         }
 
         if (e.getSource() == decButton) {
-            textField.setText(textField.getText().concat("."));
+            if (!isDecimal) {
+                textField.setText(textField.getText().concat("."));
+                isDecimal = true;
+            }
         }
         if (e.getSource() == addButton) {
             numOne = Double.parseDouble(textField.getText());
             operator = '+';
             textField.setText("");
+            isDecimal = false;
         }
         if (e.getSource() == subButton) {
             numOne = Double.parseDouble(textField.getText());
             operator = '-';
             textField.setText("");
+            isDecimal = false;
         }
         if (e.getSource() == mulButton) {
             numOne = Double.parseDouble(textField.getText());
             operator = '*';
             textField.setText("");
+            isDecimal = false;
         }
         if (e.getSource() == divButton) {
             numOne = Double.parseDouble(textField.getText());
             operator = '/';
             textField.setText("");
+            isDecimal = false;
         }
         if (e.getSource() == equButton) {
             numTwo = Double.parseDouble(textField.getText());
 
             switch (operator) {
-                case '+' :
+                case '+':
                     result = numOne + numTwo;
                     break;
-                case '-' :
+                case '-':
                     result = numOne - numTwo;
                     break;
-                case '*' :
+                case '*':
                     result = numOne * numTwo;
                     break;
-                case '/' :
+                case '/':
                     result = numOne / numTwo;
                     break;
             }
             textField.setText(String.valueOf(result));
             numOne = result;
+            isDecimal = false;
         }
 
         if (e.getSource() == clrButton) {
             textField.setText("");
+            isDecimal = false;
         }
         if (e.getSource() == delButton) {
             String text = textField.getText();
+            if(text.charAt(text.length() - 1) == '.') {
+                isDecimal = false;
+            }
             textField.setText("");
 
             for (int i = 0; i < text.length() - 1; i++) {
@@ -170,6 +181,7 @@ public class Calculator implements ActionListener {
             double temp = Double.parseDouble(textField.getText());
             temp *= -1;
             textField.setText(String.valueOf(temp));
+            isDecimal = false;
         }
     }
 }
